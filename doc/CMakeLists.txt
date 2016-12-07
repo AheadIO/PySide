@@ -3,8 +3,14 @@ project(doc)
 set(DOC_DATA_DIR "${CMAKE_CURRENT_BINARY_DIR}/qdoc3-output")
 configure_file("pyside.qdocconf.in" "pyside.qdocconf" @ONLY)
 
+get_filename_component(QT_BIN_DIR ${QT_QMAKE_EXECUTABLE} DIRECTORY)
+find_program(QDOC3_EXEC qdoc3
+    PATHS ${QT_BIN_DIR}
+    NO_DEFAULT_PATH)
+
+
 add_custom_target(qdoc3
-                COMMAND qdoc3 pyside.qdocconf
+                COMMAND ${QDOC3_EXEC} pyside.qdocconf
                 COMMENT "Running qdoc3 against Qt source code..."
                 SOURCE "pyside.qdocconf")
 
